@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "AddContragent";
+}
+
+<h1>AddContragent</h1>
+
+
+<form method="post">
+
+    <div>Name:</div>
+    <div><input type="text" name="name" /></div>
+
+    <div>Address:</div>
+    <div><input type="text" name="address" /></div>
+
+    <div>Email:</div>
+    <div><input type="text" name="email" /></div>
+
+    <div>VAT Number:</div>
+    <div><input type="text" name="VATNumber" value="" /></div>
+
+    <input type="submit" value="Add Contragent" />
+    
+    <div>
+        @ViewBag.Message
+    </div>
+
+</form>

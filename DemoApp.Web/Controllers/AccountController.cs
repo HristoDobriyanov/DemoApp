@@ -19,34 +19,35 @@ namespace DemoApp.Web.Controllers
             this.SignInManager = signInManager;
         }
 
-
-        public async Task<IActionResult> Register()
+        
+        public async Task<IActionResult> Register(string userName, string password, string email, string firstName, string lastName)
         {
             try
             {
                 ViewBag.Message = "User already registered.";
 
-                AppUser user = await UserManager.FindByNameAsync("TestUser");
+                AppUser user = await UserManager.FindByNameAsync(userName);
+
                 if (user == null)
                 {
                     user = new AppUser()
                     {
-                        UserName = "TestUser",
-                        Email = "testUser@test.com",
-                        FirstName = "John",
-                        LastName = "Doe"
+                        UserName = userName,
+                        Email = email,
+                        FirstName = firstName,
+                        LastName = lastName
                     };
 
-                    IdentityResult result = await UserManager.CreateAsync(user, "Test123!");
+                    IdentityResult result = await UserManager.CreateAsync(user, password);
                     ViewBag.Message = "User was created!";
+                        
+                    
                 }
-
             }
             catch (Exception e)
             {
                 ViewBag.Message = e.Message;
             }
-
             return View();
         }
 

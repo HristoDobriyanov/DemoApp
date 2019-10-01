@@ -1,15 +1,25 @@
-﻿@model AppUser.
-
-@{
-    ViewData["Title"] = "Register";
-}
-
+﻿
 <h1>Register</h1>
 
-<p>@ViewBag.Message</p>
 
-<div>
-    <a asp-controller="Account" asp-action="Login">Login</a>
-</div>
+<form method="post">
+
+    <div>First name:</div>
+    <div><input type="text" name="firstName" /></div>
+
+    <div>Last name:</div>
+    <div><input type="text" name="lastName" /></div>
+
+    <div>Email:</div>
+    <div><input type="text" name="email" /></div>
+
+    <div>User name:</div>
+    <div><input type="text" name="userName" value="" /></div>
+
+    <div>Password:</div>
+    <div><input type="password" name="password" value="" /></div>
+
+    <input type="submit" value="Register" />
+</form>
 
 
