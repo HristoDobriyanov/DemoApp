@@ -50,21 +50,29 @@ namespace DemoApp.Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Login()
+        public ViewResult Login()
         {
-            var result = await SignInManager.PasswordSignInAsync("TestUser", "Test123!", false, false);
+            return View();
+        }
 
+
+        [HttpPost]
+        public async Task<IActionResult> Login(string userName, string password)
+        {
+            var result = await SignInManager.PasswordSignInAsync(userName, password, false, false);
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
             }
             else
             {
-                ViewBag.Result = "result is: " + result.ToString();
+                ViewBag.Result = "The result is: " + result.ToString();
             }
 
             return View();
         }
+
+
 
         public async Task<IActionResult> Logout()
         {
