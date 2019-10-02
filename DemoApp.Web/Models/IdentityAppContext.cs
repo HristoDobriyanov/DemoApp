@@ -17,10 +17,10 @@ namespace DemoApp.Web.Models
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Contragent>()
-                .HasOne(cont => cont.AppUser)
-                .WithMany(user => user.Contragents)
-                .HasForeignKey(cont => cont.Id);
+            modelBuilder.Entity<AppUser>()
+                .HasMany<Contragent>(c => c.Contragents)
+                .WithOne(u => u.AppUser);
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿
+﻿@model AppUser
+
 @{
     ViewData["Title"] = "AddContragent";
 }
@@ -24,6 +25,13 @@
     
     <div>
         @ViewBag.Message
+    </div>
+    
+    <div>
+        Model says:
+
+        @Model.UserName
+
     </div>
 
 </form>

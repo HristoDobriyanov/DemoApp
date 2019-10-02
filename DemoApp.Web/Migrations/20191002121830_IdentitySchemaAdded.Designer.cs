@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoApp.Web.Migrations
 {
     [DbContext(typeof(IdentityAppContext))]
-    [Migration("20190929212915_IdentitySchema")]
-    partial class IdentitySchema
+    [Migration("20191002121830_IdentitySchemaAdded")]
+    partial class IdentitySchemaAdded
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -104,9 +104,13 @@ namespace DemoApp.Web.Migrations
 
             modelBuilder.Entity("DemoApp.Web.Models.Contragent", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address");
+
+                    b.Property<int?>("AppUserId");
 
                     b.Property<string>("Email");
 
@@ -115,6 +119,8 @@ namespace DemoApp.Web.Migrations
                     b.Property<string>("VATNumber");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Contragents");
                 });
@@ -206,8 +212,7 @@ namespace DemoApp.Web.Migrations
                 {
                     b.HasOne("DemoApp.Web.Models.AppUser", "AppUser")
                         .WithMany("Contragents")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AppUserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

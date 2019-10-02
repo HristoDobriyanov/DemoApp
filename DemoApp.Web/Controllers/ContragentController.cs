@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -23,43 +21,37 @@ namespace DemoApp.Web.Controllers
             this.UserManager = userManager;
         }
 
+        public async Task<IActionResult> Addcontragent()
+        {
+            var appUser = await UserManager.GetUserAsync(HttpContext.User);
+
+            return View(appUser);
+        }
+
+
+        [HttpPost]
         public async Task<IActionResult> AddContragent(string name, string address, string email, string VATNumber)
         {
-            try
+            var appUser = await UserManager.GetUserAsync(HttpContext.User);
+
+            var newContragent = new Contragent()
             {
-                ViewBag.Message = "";
+                Name = name,
+                Address = address,
+                Email = email,
+                VATNumber = VATNumber,
+                AppUser = appUser
+            };
 
-                //var entry = Context.Contragents.FirstOrDefault(con => con.VATNumber == VATNumber);
+            await Context.Contragents.AddAsync(newContragent);
 
-                if (true)
-                {
-                    var userToBeAdded = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Context.AppUsers.FirstOrDefault(x => x.Id == appUser.Id).Contragents.Add(newContragent);
 
-                    var addedContragent = new Contragent()
-                    {
-                        Name = name,
-                        Address = address,
-                        Email = email,
-                        VATNumber = VATNumber,
-                        AppUser = Context.AppUsers.FirstOrDefault(x=> x.Id == Int32.Parse(userToBeAdded))
-                    };
 
-                    ViewBag.Message = "Contragent added!";
+            await Context.SaveChangesAsync();
 
-                    Context.Contragents.Add(addedContragent);
-                    await Context.SaveChangesAsync();
-                }
-                else
-                {
-                    
-                }
-            }
-            catch (Exception e)
-            {
-                ViewBag.Messaage = e.Message;
-            }
+            return View(model: appUser);
 
-            return View();
         }
     }
 }

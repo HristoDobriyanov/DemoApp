@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DemoApp.Web.Migrations
 {
-    public partial class IdentitySchema : Migration
+    public partial class IdentitySchemaAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -161,21 +161,23 @@ namespace DemoApp.Web.Migrations
                 name: "Contragents",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    VATNumber = table.Column<string>(nullable: true)
+                    VATNumber = table.Column<string>(nullable: true),
+                    AppUserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contragents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Contragents_AspNetUsers_Id",
-                        column: x => x.Id,
+                        name: "FK_Contragents_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -216,6 +218,11 @@ namespace DemoApp.Web.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contragents_AppUserId",
+                table: "Contragents",
+                column: "AppUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

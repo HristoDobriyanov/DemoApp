@@ -28,6 +28,14 @@ namespace DemoApp.Web
             services.AddIdentity<AppUser, AppRole>(options =>
                 {
                     options.User.RequireUniqueEmail = true;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 3;
+                    options.Password.RequiredUniqueChars = 0;
+
+
                 })
                 .AddEntityFrameworkStores<IdentityAppContext>();
 
