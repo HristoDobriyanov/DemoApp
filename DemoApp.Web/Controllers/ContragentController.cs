@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DemoApp.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DemoApp.Web.Controllers
 {
@@ -45,13 +48,36 @@ namespace DemoApp.Web.Controllers
 
             await Context.Contragents.AddAsync(newContragent);
 
-            Context.AppUsers.FirstOrDefault(x => x.Id == appUser.Id).Contragents.Add(newContragent);
-
+            appUser.Contragents.Add(newContragent);
 
             await Context.SaveChangesAsync();
 
             return View(model: appUser);
 
+        }
+
+        public async Task<IActionResult> ShowAll()
+        {
+            var appUser = await UserManager.GetUserAsync(HttpContext.User);
+            ICollection<Contragent> contCollection = new List<Contragent>();
+            
+
+            foreach (var cont in Context.Contragents)
+            {
+                if (cont.AppUser.Id == appUser.Id)
+                {
+                    contCollection.Add(cont);    
+                }    
+            }
+
+            return View(contCollection);
+        }
+
+        public IActionResult Details(int Id)
+        {
+            var cont = Context.Contragents.Find(Id);
+
+            return View(model: cont);
         }
     }
 }

@@ -47,9 +47,21 @@
                                 <a asp-controller="Account" asp-action="Login" class="nav-link text-dark">Login</a>
                             }
                         </li>
+                        
+                        <li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp-controller="Contragent" asp-action="ShowAll" class="nav-link text-dark">Show all contragents for @User.Identity.Name</a>
+                            }
+                        </li>   
+                        
+
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contragent" asp-action="AddContragent">Add Contragent</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Contragent" asp-action="AddContragent">Add Contragent</a>
+                            }
                         </li>
 
 
