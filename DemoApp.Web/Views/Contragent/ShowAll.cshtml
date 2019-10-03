@@ -10,20 +10,21 @@
 
 <table class="table table-striped">
     <thead>
-        <tr>
-            <th>Contragent name</th>
-        </tr>
+    <tr>
+        <th>Contragent name</th>
+    </tr>
     </thead>
     <tbody>
 
-        @foreach (var cont in Model)
-        {
-            <tr>
-                <td>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Contragent" asp-action="Details" asp-route-id="@cont.Id">@cont.Name</a>
+    @foreach (var cont in Model)
+    {
+        <tr>
+            <td>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Contragent" asp-action="Details" asp-route-id="@cont.Id">@cont.Name</a>
 
-                </td>
-            </tr>
-        }
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
+

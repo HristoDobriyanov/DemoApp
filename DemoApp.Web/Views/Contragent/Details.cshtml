@@ -15,11 +15,13 @@
     </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>@Model.Name</td>
-            <td>@Model.Address</td>
-            <td>@Model.Email</td>
-            <td>@Model.VATNumber</td>
-        </tr>
+    <tr>
+        <td>@Model.Name</td>
+        <td>@Model.Address</td>
+        <td>@Model.Email</td>
+        <td>@Model.VATNumber</td>
+    </tr>
     </tbody>
 </table>
+
+<a class="navbar-brand" asp-area="" asp-controller="Contragent" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>

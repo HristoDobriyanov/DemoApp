@@ -1,0 +1,29 @@
+﻿@model Contragent
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit contragent "@Model.Name"</h2>
+
+<form method="post">
+
+    <div>Name:</div>
+    <div><input type="text" name="name" value="@Model.Name" /></div>
+
+    <div>Address:</div>
+    <div><input type="text" name="address" value="@Model.Address" /></div>
+
+    <div>Email:</div>
+    <div><input type="text" name="email" value="@Model.Email" /></div>
+
+    <div>VAT Number:</div>
+    <div><input type="text" name="VATnumber" value="@Model.VATNumber" /></div>
+
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <div>
+        <input type="submit" value="Edit" />
+    </div>
+
+
+</form>

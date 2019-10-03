@@ -56,28 +56,54 @@ namespace DemoApp.Web.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Edit(string name, string address, string email, string VATNumber, int id)
+        {
+            var cont = Context.Contragents.Find(id);
+            cont.Name = name;
+            cont.Address = address;
+            cont.Email = email;
+            cont.VATNumber = VATNumber;
+
+            await Context.SaveChangesAsync();
+
+            return RedirectToAction("ShowAll", "Contragent");
+
+        }
+
         public async Task<IActionResult> ShowAll()
         {
             var appUser = await UserManager.GetUserAsync(HttpContext.User);
             ICollection<Contragent> contCollection = new List<Contragent>();
-            
+
 
             foreach (var cont in Context.Contragents)
             {
                 if (cont.AppUser.Id == appUser.Id)
                 {
-                    contCollection.Add(cont);    
-                }    
+                    contCollection.Add(cont);
+                }
             }
 
             return View(contCollection);
         }
 
-        public IActionResult Details(int Id)
+        public IActionResult Details(int id)
         {
-            var cont = Context.Contragents.Find(Id);
+            var cont = Context.Contragents.Find(id);
 
             return View(model: cont);
         }
+
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var cont = Context.Contragents.Find(id);
+
+            return View(model: cont);
+        }
+
+
     }
 }
